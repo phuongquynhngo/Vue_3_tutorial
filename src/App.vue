@@ -59,11 +59,10 @@
 
 
 <!-- Conditional Rendering 
-  v-if 
-  v-else 
-  v-else-if
-  v-show
+  v-if, v-else, v-else-if: mount and unmount elements to the dom 
+  v-show: toggles the display css property
   -->
+
   <h2 v-if="num===0">The number is zero</h2>
   <h2 v-else-if="num <0">The number is negative</h2>   <!--'javascript expression' -->
   <h2 v-else-if="num >0">The number is positive</h2>
@@ -72,8 +71,28 @@
    otherwise this will not work/ not be recognized -->
 
   <!-- Conditional Rendering  multiple elements -->
+  <!-- <div v-if="display">
   <h2>Quynh Ngo</h2>
   <h2>Code</h2>
+  <h2>Vue</h2>
+  </div> -->
+  <template v-if="display">
+  <h2>Quynh Ngo</h2>
+  <h2>Code</h2>
+  <h2>Vue</h2>
+  </template> 
+  <!-- template tag: invisible wrapper -->
+  
+  <!-- v-show  -->
+  <h2 v-show="showElement">Using v-show</h2>
+  <h2 v-if="showElement">Using v-if</h2>
+  <!-- When showElement property is false: conditional Element using v-if directive is not present in the dom,
+  but v-show still present with the display css property set to none
+  v-if conditionally renders elements, higher toggle costs, v-if allows us to use other logic blocks in combination with it: v-else and v-else-ifblocks to really build advanced logic
+  v-show conditionally displayselements, higher initial render costs, to toggle something frequently
+  -->
+
+
 
 
 
@@ -120,6 +139,7 @@ export default {
       },
       num:"a",
       display: true,
+      showElement: false,
     };
   },
 
