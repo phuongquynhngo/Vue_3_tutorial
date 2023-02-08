@@ -1,0 +1,153 @@
+<template>
+  <!-- Binding Text -->
+   <div>{{ greet }} {{ name }}</div> 
+
+  <!-- Binding html -->
+  <div v-html="channel"></div>
+  <div v-html="hack"></div>
+
+  <!-- Binding to attributes -->
+  <h2 v-bind:id="headingId">Heading</h2>
+  <button v-bind:disable="isDisabled">Bind</button>
+
+  <!-- Binding classes -->
+  <h2 class="underline">Underlined Text</h2>
+  <h2 class="underline" v-bind:class="status">Status</h2>
+  <h2 v-bind:class="isPromoted && 'promoted'">Promoted Movie</h2> <!--v-bind classes conditionally -->
+  <h2 v-bind:class="isSoldout ? 'soldout' : 'new'">Soldout? Movie</h2><!-- isSoldout: true: class solout; false: class new -->
+  <h2 v-bind:class="['new', 'promoted']">Newly promoted movie</h2><!--Array classes binding -->
+  <h2 v-bind:class="[isPromoted && 'promoted',isSoldout ? 'soldout' : 'new']">Array conditional movie</h2><!--Array classes conditional binding -->
+  <h2 v-bind:class="{
+    promoted: isPromoted,
+    new: !isSoldout,
+    soldout: isSoldout,
+  }">Object conditional movie</h2><!--Object classes conditional binding, same Array classes conditional binding -->
+
+
+<!-- Binding style -->
+
+  <!-- Binding style array approach, ideal for single inline style property -->
+  <h2 v-bind:style="{
+    color: highlightColor,
+    'font-size':headerSize +'px',
+    padding: '20px'
+  }">Inline Style</h2> 
+  <!--
+  'font-size' in quote, because it is not a single word
+  'font-size':headerSize +'px'
+  OR: 
+  fontSize:headerSize +'px' 
+  -->
+
+  <!-- Binding style object approach, ideal for single inline style properties-->
+  <h2 v-bind:style="headerStyleObject">Style Object</h2>
+
+  <div v-bind:style="[baseStyleObject, successStyleObject]">Success Style</div> 
+  <!-- The last style object gets priority when there are conflicting styles -->
+
+  <div v-bind:style="[baseStyleObject, dangerStyleObject]">Danger Style</div> 
+
+
+<!--
+  v-bind Shorthand
+ : instead of v-bind: 
+
+ <h2 :class="isPromoted && 'promoted'">Promoted Movie</h2>
+ <h2 v-bind:class="isPromoted && 'promoted'">Promoted Movie</h2>
+ 
+  -->
+
+
+<!-- Conditional Rendering 
+  v-if 
+  v-else 
+  v-else-if
+  v-show
+  -->
+  <h2 v-if="num===0">The number is zero</h2>
+  <h2 v-else-if="num <0">The number is negative</h2>   <!--'javascript expression' -->
+  <h2 v-else-if="num >0">The number is positive</h2>
+  <h2 v-else>Not a number</h2> 
+  <!-- v-else or v-else-if directive must follow the v-if or v-else-if element,
+   otherwise this will not work/ not be recognized -->
+
+  <!-- Conditional Rendering  multiple elements -->
+  <h2>Quynh Ngo</h2>
+  <h2>Code</h2>
+
+
+
+
+
+</template>
+
+<script>
+
+export default {
+  name: 'App',
+  data(){
+    return{
+      greet:'Hello',
+      name:"Quynh",
+      channel:'<b>Code</b>',
+      hack: `<a href="#" onclick="alert('You have been hacked!')">Win a prize!</a>`,
+      headingId: 'heading',
+      isDisabled: true,
+      status: 'danger',
+      isPromoted: true,
+      isSoldout: true,
+      highlightColor: 'orange',
+      headerSize: '50',
+      headerStyleObject:{
+        color: 'orange',
+        fontSize: '50px',
+        padding: '20px',},
+      baseStyleObject:{
+        fontSize: '50px',
+        padding: '10px',
+      },
+      successStyleObject:{
+        color: 'green',
+        backgroungColor:'lightgreen',
+        border:  '1px solid green',
+        padding: '0px'
+    
+      },
+      dangerStyleObject:{
+        color: 'darkred',
+        backgroundColor: 'red',
+        border: '1px solid darkred',              
+      },
+      num:"a",
+      display: true,
+    };
+  },
+
+}
+</script>
+
+<style>
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
+div{
+  display: block;
+}
+.underline{
+  text-decoration: underline;
+}
+.promoted{
+  font-style: italic;
+}
+.new{
+  color: green;
+}
+.soldout{
+  color: red;
+}
+</style>
