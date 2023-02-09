@@ -150,6 +150,15 @@
 
 
 
+<!-- Methods in Vue  -->
+<h2>{{ 1+2+3 }}</h2>
+<h2>{{ 12+2+3 }}</h2>
+
+<h2>Add method: {{ add(1,2,3) }}</h2>
+<h2>Add method: {{ add(12,2,3) }}</h2>
+
+<h2>Multiply method: {{ multiply(2) }}</h2>
+<h2>Multiply method: {{ multiply(baseValue) }}</h2>
 
 </template>
 
@@ -214,6 +223,9 @@ export default {
         channel: 'Codevolution',
         course: 'Vue 3',
       },
+      baseMultiplier:5,
+      baseValue:2,
+
     };
    
   },
@@ -221,6 +233,12 @@ export default {
     shuffle() {
       console.log(this.names);
       this.names = _.shuffle(this.names);
+    },
+    add(a,b,c){
+      return a+b+c
+    },
+    multiply(num){
+      return num * this.baseMultiplier
     },
   },
 
