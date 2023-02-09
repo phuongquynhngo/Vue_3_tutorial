@@ -160,6 +160,44 @@
 <h2>Multiply method: {{ multiply(2) }}</h2>
 <h2>Multiply method: {{ multiply(baseValue) }}</h2>
 
+
+<!-- Event Handling -->
+
+<h2>{{ name }}</h2>
+<div>
+  <!-- <button v-on:mouseover="name ='Quang'"> Change name</button> -->
+<!-- <button v-on:click="name ='Quang'"> Change name</button> -->
+<button v-on:click="changeName"> Change name</button>
+<button v-on:click="changeName($event)"> Change name</button>
+
+</div>
+
+<h2>{{ count }}</h2>
+<div>
+<button v-on:click="count +=1">Increment</button>
+<button v-on:click="count -=1">Decrement</button>
+</div>
+<div>
+<button v-on:click="increment(1)">Increment 1</button>
+<button v-on:click="increment(2)">Increment 2</button>
+<button v-on:click="decrement(1)">Decrement 1</button>
+<button v-on:click="decrement(2)">Decrement 2</button>
+</div>
+
+<!-- v-on Shorthand
+ @ instead of v-on:
+ -->
+ <div>
+<button @click="increment(1, $event)">Increment 1</button>
+<button @click="increment(2)">Increment 2</button>
+<button @click="decrement(1)">Decrement 1</button>
+<button @click="decrement(2)">Decrement 2</button>
+</div>
+
+<!-- multiple events handling -->
+<button v-on:click="changeName($event), increment(1, $event)"> Change name</button>
+
+
 </template>
 
 <script>
@@ -225,7 +263,7 @@ export default {
       },
       baseMultiplier:5,
       baseValue:2,
-
+      count:0,
     };
    
   },
@@ -234,12 +272,23 @@ export default {
       console.log(this.names);
       this.names = _.shuffle(this.names);
     },
+    changeName(event){
+      this.name ='Quang'
+      console.log('Event', event)
+    },
     add(a,b,c){
       return a+b+c
     },
     multiply(num){
       return num * this.baseMultiplier
     },
+    increment(num,event){
+       this.count +=num
+       console.log('Event', event)
+    },
+    decrement(num){
+      return this.count -=num
+    }
   },
 
 };
