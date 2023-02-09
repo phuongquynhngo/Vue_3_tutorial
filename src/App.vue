@@ -81,8 +81,12 @@
   <h2>Code</h2>
   <h2>Vue</h2>
   </template> 
-  <!-- template tag: invisible wrapper -->
+  <!-- template tag: invisible wrapper
+   to toggle more than one element
+   The final rendered result will not include the <template> element.
+   -->
   
+
   <!-- v-show  -->
   <h2 v-show="showElement">Using v-show</h2>
   <h2 v-if="showElement">Using v-if</h2>
@@ -134,6 +138,18 @@
     <hr />
   </template>
   <button @click="shuffle">Shuffle!</button>
+
+
+
+<!-- Conditional List Rendering -->
+  <template v-for="name in names" :key="name">
+  <h2 v-if="name ==='Quynh'">{{ name }}</h2>
+  </template>
+<!-- When v-if and v-for are both used on the same element, v-if will be evaluated first. -->
+
+
+
+
 
 </template>
 
