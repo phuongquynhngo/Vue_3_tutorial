@@ -92,6 +92,7 @@
   v-show conditionally displayselements, higher initial render costs, to toggle something frequently
   -->
 
+
 <!-- List Rendering
 
   using v-for directive -->
@@ -120,13 +121,24 @@
   <hr />
   </template>
   
-
-
+ <!-- List and keys 
+ key here is a special attribute being bound with v-bind. 
+ It should not be confused with the property key variable when using v-for with an object.
+ To give Vue a hint so that it can track each node's identity, 
+ and thus reuse and reorder existing elements, you need to provide a unique key attribute for each item.
+ The key binding expects primitive values - i.e. strings and numbers
+ -->
+ <template v-for="name in names" :key="name">
+    <h2>{{ name }}</h2>
+    <input placeholder="Last name" />
+    <hr />
+  </template>
+  <button @click="shuffle">Shuffle!</button>
 
 </template>
 
 <script>
-
+import _ from "lodash";
 export default {
   name: 'App',
   data(){
@@ -165,7 +177,7 @@ export default {
       num:"a",
       display: true,
       showElement: false,
-      names: ['Quang', 'Quynh', 'Nam'], 
+      names: ["Quynh", "Quang", "Nam"],
       fullNames: [
         {first: 'Quang', last:'Pham'},
         {first: 'Quynh', last:'Ngo'},
@@ -187,9 +199,16 @@ export default {
         course: 'Vue 3',
       },
     };
+   
+  },
+  methods: {
+    shuffle() {
+      console.log(this.names);
+      this.names = _.shuffle(this.names);
+    },
   },
 
-}
+};
 </script>
 
 <style>
