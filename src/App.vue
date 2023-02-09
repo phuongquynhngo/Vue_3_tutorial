@@ -92,9 +92,34 @@
   v-show conditionally displayselements, higher initial render costs, to toggle something frequently
   -->
 
+<!-- List Rendering
 
+  using v-for directive -->
 
+  <!--iterating over an array of strings  -->
 
+  <!-- <h2 v-for="name in names" :key="name">{{ name }}</h2> -->
+  <h2 v-for="(name, index) in names" :key="name">{{index}} {{ name }}</h2>
+  <!-- value of v-bind key attributes must be unique  -->
+
+  <!--iterating over an array of objects  -->
+  <h2 v-for="name in fullNames" :key="name.first">{{ name.first }} {{ name.last }}</h2>
+
+  <!--iterating over an array of arrays  -->
+  <div v-for="actor in actors" :key="actor.name">
+  <h2 >{{ actor.name }}</h2>
+  <h3 v-for="movie in actor.movies" :key="movie">{{ movie }}</h3>
+  </div>
+
+  <!--iterating over an object  -->
+  <h2 v-for="(value,key,index) in myInfo" :key="value">{{index}} {{key}} {{ value }}</h2>
+   
+   <!-- using v-for in template -->
+  <template v-for="name in names" :key="name">
+  <h2>{{ name }}</h2>
+  <hr />
+  </template>
+  
 
 
 
@@ -140,6 +165,27 @@ export default {
       num:"a",
       display: true,
       showElement: false,
+      names: ['Quang', 'Quynh', 'Nam'], 
+      fullNames: [
+        {first: 'Quang', last:'Pham'},
+        {first: 'Quynh', last:'Ngo'},
+        {first: 'Nam', last:'Nguyen'},
+      ],
+      actors: [
+        {
+          name: 'Christian Bale',
+          movies: ['Batman', 'American Psycho'],
+        },
+        {
+          name: 'Di Caprio',
+          movies: ['Titanic', 'Inception'],
+        },
+      ],
+      myInfo: {
+        name: 'Vishwas',
+        channel: 'Codevolution',
+        course: 'Vue 3',
+      },
     };
   },
 
