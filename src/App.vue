@@ -198,6 +198,63 @@
 <button v-on:click="changeName($event), increment(1, $event)"> Change name</button>
 
 
+<!-- Form Handling -->
+
+<!-- Capture user inputs, 
+Inputs,
+Textasreas, 
+Single select dropdown control, 
+Multi select control, 
+Checkbox, 
+Checkbox group, 
+Radio, 
+Submit form data -->
+
+<!-- v-model  directive : 2 way binding refers binding from tho template to data and from data back to template, 
+ensures model and view are always in sync -->
+
+ <div> <!--stringify Presentation -->
+<pre>
+{{ JSON.stringify(formValue, null , 2) }}
+</pre>
+<!-- The <pre> tag is an HTML tag used to indicate preformatted text. This means that the text within the <pre> tag will be displayed exactly as written, 
+with all white spaces preserved, including line breaks, tabs, and multiple spaces. -->
+</div>
+ <form>
+ <div>
+ <label for="name">NAME</label>
+ <input type="text" id="name" v-model="formValue.name">
+ </div>
+
+ <div>
+ <label  for="profile">Profile Summary </label>
+ <textarea  id="profile" v-model="formValue.profileSumary" />
+ </div>
+
+ <div>
+<label for="country">Country</label>
+<select id="country" v-model="formValue.country">
+<option value="">Select a country</option>
+<option value="germany">Germany</option>
+<option value="vietnam">Vietnam</option>
+<option value="china">China</option>
+</select>
+</div>
+
+<div>
+<label for="job-location">Job Location</label>
+<select id="job-location" multiple v-model="formValue.jobLocation">
+
+<option value="germany">Germany</option>
+<option value="vietnam">Vietnam</option>
+<option value="china">China</option>
+</select>
+</div>
+ </form>
+
+
+
+
 </template>
 
 <script>
@@ -264,6 +321,12 @@ export default {
       baseMultiplier:5,
       baseValue:2,
       count:0,
+      formValue:{
+        name:'',
+        profileSumary:'',
+        country:'',
+        jobLocation:[],
+      },
     };
    
   },
@@ -299,7 +362,7 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+  /* text-align: center; */
   color: #2c3e50;
   margin-top: 60px;
 }
@@ -317,5 +380,29 @@ div{
 }
 .soldout{
   color: red;
+}
+label {
+  font-weight: bold;
+  display: flex;
+  margin-bottom: 5px;
+}
+input + label {
+  font-weight: bold;
+  display: inline-flex;
+  margin-right: 20px;
+}
+input[type='text'],
+textarea,
+select {
+  display: block;
+  width: 400px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 </style>
