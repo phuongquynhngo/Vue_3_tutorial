@@ -400,6 +400,31 @@ ex: submit when click enter
  only call `submit` when the `key` is `Enter` 
 
   -->
+
+
+<!-- Bonus Directives  -->
+<!-- v-once
+Render the element and component once only, and skip future updates.
+Does not expect expression
+Details
+On subsequent re-renders, the element/component and all its 
+children will be treated as static content and skipped. This can be used to optimize update performance -->
+<h2 v-once>{{ name }}</h2>
+  <div>
+    <button v-on:click="changeName($event)">Change name</button>
+  </div>
+  <!-- data: name:"Quynh", name.value does not change to "Quang" when click Change name button.  -->
+
+<!-- v-pre
+Skip compilation for this element and all its children.
+Does not expect expression
+Details
+Inside the element with v-pre, all Vue template syntax will be preserved and rendered as-is.
+The most common use case of this is displaying raw mustache tags. -->
+<h2 v-pre>{{ name }}</h2>
+
+
+
 </form>
 </template>
 
