@@ -234,10 +234,10 @@ with all white spaces preserved, including line breaks, tabs, and multiple space
 
     <!-- Inputs -->
   </div>
-  <form @submit="submitForm">
+  <form @submit.prevent="submitForm">
     <div>
       <label for="name">NAME</label>
-      <input type="text" id="name" v-model="formValue.name" />
+      <input type="text" id="name" v-model.trim.lazy="formValue.name" />
     </div>
 
     <!-- Textasreas -->
@@ -334,11 +334,73 @@ with all white spaces preserved, including line breaks, tabs, and multiple space
         v-model="formValue.yearsOfExperience"
       />
       <label for="10+">10+</label>
+      <div>
+        <label for="age">Age</label>
+        <input  @keyup.enter="submitForm" type="number" id="age" v-model.number="formValue.age"/>
+      </div>
     </div>
     <!-- Submit form data -->
-  <div>
-  <button>Submit</button></div>
-  </form>
+    <!-- <div>
+      <button>Submit</button>
+    </div> -->
+
+    <!-- Modifiers 
+.trim
+If you want whitespace from user input to be trimmed automatically, 
+you can add the trim modifier to your v-model-managed inputs:
+<input v-model.trim="msg" />
+
+.number
+If you want user input to be automatically typecast as a number,
+you can add the number modifier to your v-model managed inputs:
+<input v-model.number="age" />
+If the value cannot be parsed with parseFloat(), then the original value is used instead.
+The number modifier is applied automatically if the input has type="number".
+
+.lazy
+By default, v-model syncs the input with the data after each input event 
+(with the exception of IME composition as stated above). 
+You can add the lazy modifier to instead sync after change events:
+(synced after "change" instead of "input")
+<input v-model.lazy="msg" />
+The lazy Modifier is used when syncing is not required instantaneously. 
+After each input event is fired from the input element, the v-model modifies the variable. Instead, the lazy modifier updates the value on submit. 
+This syncs the value after the change.
+The lazy modifier is useful for textarea and input text elements as the elements are changed instantaneously. 
+We can change the value once the change is being made. This is pretty useful where the search is being with the help of API. We can prevent unwanted API calls when the user enters the query.
+ 
+ Prevent modifier
+ It is a very common need to call event.preventDefault() or event.stopPropagation() inside event handlers. 
+ Although we can do this easily inside methods, it would be better if the methods can be purely 
+ about data logic rather than having to deal with DOM event details.
+ To address this problem, Vue provides event modifiers for v-on.
+
+ the click event's propagation will be stopped
+<a @click.stop="doThis"></a>
+
+the submit event will no longer reload the page
+<form @submit.prevent="onSubmit"></form>
+
+modifiers can be chained
+<a @click.stop.prevent="doThat"></a>
+
+just the modifier
+<form @submit.prevent></form>
+
+only trigger handler if event.target is the element itself -->
+<!-- i.e. not from a child element
+<div @click.self="doThat">...</div>
+
+
+Key Modifiers: adding key modifiers for v-on or @ when listening for key events
+
+ex: submit when click enter
+1. commenting out submit form:
+2. add event binding on html: <input @keyup.enter="submit" />
+ only call `submit` when the `key` is `Enter` 
+
+  -->
+</form>
 </template>
 
 <script>
@@ -413,7 +475,8 @@ export default {
         // remoteWork: false,
         remoteWork: "no",
         skillSet: [],
-        yearsOfExperience:'',
+        yearsOfExperience: "",
+        age: null,
       },
     };
   },
@@ -439,10 +502,11 @@ export default {
     decrement(num) {
       return (this.count -= num);
     },
-    submitForm(event){
-      event.preventDefault();
-      console.log('Form values', this.formValue)
-    }
+    // submitForm(event) {
+      // event.preventDefault();
+      submitForm() {
+      console.log("Form values", this.formValue);
+    },
   },
 };
 </script>
