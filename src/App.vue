@@ -336,7 +336,12 @@ with all white spaces preserved, including line breaks, tabs, and multiple space
       <label for="10+">10+</label>
       <div>
         <label for="age">Age</label>
-        <input  @keyup.enter="submitForm" type="number" id="age" v-model.number="formValue.age"/>
+        <input
+          @keyup.enter="submitForm"
+          type="number"
+          id="age"
+          v-model.number="formValue.age"
+        />
       </div>
     </div>
     <!-- Submit form data -->
@@ -388,7 +393,7 @@ just the modifier
 <form @submit.prevent></form>
 
 only trigger handler if event.target is the element itself -->
-<!-- i.e. not from a child element
+    <!-- i.e. not from a child element
 <div @click.self="doThat">...</div>
 
 
@@ -401,31 +406,67 @@ ex: submit when click enter
 
   -->
 
-
-<!-- Bonus Directives  -->
-<!-- v-once
+    <!-- Bonus Directives  -->
+    <!-- v-once
 Render the element and component once only, and skip future updates.
 Does not expect expression
 Details
 On subsequent re-renders, the element/component and all its 
 children will be treated as static content and skipped. This can be used to optimize update performance -->
-<h2 v-once>{{ name }}</h2>
-  <div>
-    <button v-on:click="changeName($event)">Change name</button>
-  </div>
-  <!-- data: name:"Quynh", name.value does not change to "Quang" when click Change name button.  -->
+    <h2 v-once>{{ name }}</h2>
+    <div>
+      <button v-on:click="changeName($event)">Change name</button>
+    </div>
+    <!-- data: name:"Quynh", name.value does not change to "Quang" when click Change name button.  -->
 
-<!-- v-pre
+    <!-- v-pre
 Skip compilation for this element and all its children.
 Does not expect expression
 Details
 Inside the element with v-pre, all Vue template syntax will be preserved and rendered as-is.
 The most common use case of this is displaying raw mustache tags. -->
-<h2 v-pre>{{ name }}</h2>
+    <h2 v-pre>{{ name }}</h2>
+  </form>
+
+  <!-- Display data in the UI:
+- static html 
+- text interpolation 
+- simple expressions
+- Methods
+- Computed Properties -->
+
+  <!-- Computed Properties 
+Properties that can be bound to the template like data properties.
+They are used for composing new data from existing sources.
+They are highly performant as they are cached calculations which only update when their dependencies change.-->
+  <h2>Fullname - {{ firstName }} {{ lastName }}</h2>
+  <h2>Computed Fullname - {{ fullName }}</h2>
+  <h2>
+    Total - {{ items.reduce((total, curr) => (total = total + curr.price), 0) }}
+  </h2>
+  <!-- This is a template expression in Vue.js that calculates the total of prices of items in an array called items.
+items.reduce is an Array method that iterates over the array, applying a callback function to each element, 
+and reducing the array to a single value. The first argument of reduce is the callback function that takes two parameters: 
+total and curr. The total parameter is the accumulator that is updated with the result of each iteration and is initialized
+with the second argument of reduce, which is 0 in this case. The curr parameter is the current element of the array being 
+processed.
+In this template expression, the callback function adds the price property of the current element (curr) to the accumulator 
+(total). So, for each iteration, the total value is updated with the sum of the previous total and the price of the current 
+element. The final value of total will be the sum of all price values in the items array.
+The result of this expression will be a dynamic value that updates whenever the items array changes. 
+The value of {{ items.reduce((total, curr) => (total = total + curr.price), 0) }} will be inserted 
+into the HTML template wherever it is used. -->
+<button @click="items.push({ id: 4, title: 'Keyboard', price: 50 })">
+    Add item
+  </button>
+<h2>Computed Total - {{ total }}</h2>
+<div>
+<pre
+      >{{ JSON.stringify(items, null, 2) }}
+</pre>
+</div>
 
 
-
-</form>
 </template>
 
 <script>
@@ -503,6 +544,25 @@ export default {
         yearsOfExperience: "",
         age: null,
       },
+      firstName: "Quynh",
+      lastName: "Ngo",
+      items: [
+        {
+          id: 1,
+          title: "TV",
+          price: 100,
+        },
+        {
+          id: 2,
+          title: "Phone",
+          price: 200,
+        },
+        {
+          id: 3,
+          title: "Laptop",
+          price: 300,
+        },
+      ],
     };
   },
   methods: {
@@ -528,9 +588,18 @@ export default {
       return (this.count -= num);
     },
     // submitForm(event) {
-      // event.preventDefault();
-      submitForm() {
+    // event.preventDefault();
+    submitForm() {
       console.log("Form values", this.formValue);
+    },
+  },
+  computed: {
+    fullName() {
+      return `${this.firstName} ${this.lastName}`;
+    },
+    total(){
+      return this.items.reduce((total, curr) => (total = total + curr.price), 0);
+
     },
   },
 };
