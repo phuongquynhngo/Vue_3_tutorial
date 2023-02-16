@@ -108,6 +108,13 @@
   v-show conditionally displayselements, higher initial render costs, to toggle something frequently
   -->
 
+
+
+  <h1 class="underline soldout">List Rendering </h1>
+ 
+<h2>v-for: iterating over an array of strings, iterating over an array of objects, iterating over an array of arrays, iterating over an object
+  </h2>
+  <h2>using v-for in template</h2>
   <!-- List Rendering
 
   using v-for directive -->
@@ -154,12 +161,16 @@
   </template>
   <button @click="shuffle">Shuffle!</button>
 
+
+  <h1 class="underline soldout"> Conditional List Rendering </h1>
   <!-- Conditional List Rendering -->
   <template v-for="name in names" :key="name">
     <h2 v-if="name === 'Quynh'">{{ name }}</h2>
   </template>
   <!-- When v-if and v-for are both used on the same element, v-if will be evaluated first. -->
 
+
+  <h1 class="underline soldout"> Methods in Vue </h1>
   <!-- Methods in Vue  -->
   <h2>{{ 1 + 2 + 3 }}</h2>
   <h2>{{ 12 + 2 + 3 }}</h2>
@@ -170,8 +181,10 @@
   <h2>Multiply method: {{ multiply(2) }}</h2>
   <h2>Multiply method: {{ multiply(baseValue) }}</h2>
 
-  <!-- Event Handling -->
 
+  <h1 class="underline soldout">Event Handling   </h1>
+  <!-- Event Handling -->
+<h2>v-on, multiple events handling</h2>
   <h2>{{ name }}</h2>
   <div>
     <!-- <button v-on:mouseover="name ='Quang'"> Change name</button> -->
@@ -207,7 +220,19 @@
     Change name
   </button>
 
+
+  <h1 class="underline soldout">Form Handling   </h1>
   <!-- Form Handling -->
+  <h2> 
+  Capture user inputs, 
+Inputs,
+Textasreas, 
+Single select dropdown control, 
+Multi select control, 
+Checkbox, 
+Checkbox group, 
+Radio, 
+Submit form data </h2>
 
   <!-- Capture user inputs, 
 Inputs,
@@ -349,6 +374,8 @@ with all white spaces preserved, including line breaks, tabs, and multiple space
       <button>Submit</button>
     </div> -->
 
+
+    <h1 class="underline soldout">Modifiers  </h1>
     <!-- Modifiers 
 .trim
 If you want whitespace from user input to be trimmed automatically, 
@@ -406,6 +433,7 @@ ex: submit when click enter
 
   -->
 
+  <h1 class="underline soldout">Bonus Directives  </h1>
     <!-- Bonus Directives  -->
     <!-- v-once
 Render the element and component once only, and skip future updates.
@@ -435,12 +463,19 @@ The most common use case of this is displaying raw mustache tags. -->
 - Methods
 - Computed Properties -->
 
+<h1 class="underline soldout">Computed Properties </h1>
   <!-- Computed Properties 
 Properties that can be bound to the template like data properties.
 They are used for composing new data from existing sources.
 They are highly performant as they are cached calculations which only update when their dependencies change.-->
   <h2>Fullname - {{ firstName }} {{ lastName }}</h2>
   <h2>Computed Fullname - {{ fullName }}</h2>
+
+  <div>
+<pre
+      >{{ JSON.stringify(items, null, 2) }}
+</pre>
+</div>
   <h2>
     Total - {{ items.reduce((total, curr) => (total = total + curr.price), 0) }}
   </h2>
@@ -460,12 +495,26 @@ into the HTML template wherever it is used. -->
     Add item
   </button>
 <h2>Computed Total - {{ total }}</h2>
-<div>
-<pre
-      >{{ JSON.stringify(items, null, 2) }}
-</pre>
-</div>
 
+
+
+<!-- Computed Properties vs Methods -->
+<h1 class="underline soldout">Computed Properties vs Methods</h1>
+<h2>Method Total- {{ getTotal() }}</h2>
+<p>Computed properties and methods in Vue.js are both used to perform dynamic data transformations, but they have some differences in their behavior and usage: <br>
+
+- Computed properties are cached based on their dependencies, which means that they are only re-evaluated when their dependencies change.
+ This makes them more efficient for frequently used data transformations, since the result is cached and only recalculated when necessary. 
+ Methods, on the other hand, are recalculated every time they are called, regardless of whether their dependencies have changed. <br>
+
+- Computed properties are typically used to transform or derive data from other data properties in the component,
+ while methods are used to perform more complex logic or data transformations that cannot be easily expressed as a simple computed property.<br>
+
+- Computed properties are defined as functions that return a value, while methods are defined as functions 
+that can have side effects and do not need to return a value.<br>
+
+In general, computed properties should be used when you need to transform or derive data from other data properties in your component, while methods should be used when you need to perform more complex logic or data transformations that cannot be easily expressed as a simple computed property. Additionally, computed properties are more efficient for frequently used data transformations, since their result is cached based on their dependencies.
+</p>
 
 </template>
 
@@ -591,6 +640,9 @@ export default {
     // event.preventDefault();
     submitForm() {
       console.log("Form values", this.formValue);
+    },
+    getTotal(){
+      return this.items.reduce((total, curr) => (total = total + curr.price), 0);
     },
   },
   computed: {
